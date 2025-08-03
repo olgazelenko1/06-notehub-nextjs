@@ -6,7 +6,7 @@ import NoteList from '../../components/NoteList/NoteList';
 import SearchBox from '../../components/SearchBox/SearchBox';
 import Modal from '../../components/NoteModal/NoteModal';
 import NoteForm from '../../components/NoteForm/NoteForm';
-import { fetchNotes } from '../../services/noteService';
+import { fetchNotes } from '../../lib/api';
 import { type NoteResponse } from '../../types/note';
 import css from './App.module.css';
 
