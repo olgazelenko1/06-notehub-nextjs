@@ -1,23 +1,30 @@
-import { useEffect } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import css from './Modal.module.css';
+import css from './NoteModal.module.css';
 
 interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
-
 export default function Modal({ onClose, children }: ModalProps) {
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
   useEffect(() => {
+    setModalRoot(document.getElementById('modal-root'));
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
         onClose();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -25,6 +32,8 @@ export default function Modal({ onClose, children }: ModalProps) {
       onClose();
     }
   };
+
+  if (!modalRoot) return null;
 
   return createPortal(
     <div

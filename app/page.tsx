@@ -1,23 +1,22 @@
-import type { Metadata } from 'next';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import css from './page.module.css';
 
-export const metadata: Metadata = {
-  title: 'NoteHub',
-  description: 'Manage your notes easily',
-};
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function HomePage() {
   return (
-    <html lang="en">
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <main>
+      <div className={css.container}>
+        <h1 className={css.title}>Welcome to NoteHub</h1>
+        <p className={css.description}>
+          NoteHub is a simple and efficient application designed for managing
+          personal notes. It helps keep your thoughts organized and accessible
+          in one place, whether you are at home or on the go.
+        </p>
+        <p className={css.description}>
+          The app provides a clean interface for writing, editing, and browsing
+          notes. With support for keyword search and structured organization,
+          NoteHub offers a streamlined experience for anyone who values clarity
+          and productivity.
+        </p>
+      </div>
+    </main>
   );
 }
