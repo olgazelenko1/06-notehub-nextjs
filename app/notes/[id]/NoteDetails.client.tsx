@@ -10,9 +10,9 @@ interface NoteDetailsClientProps {
   dehydratedState: DehydratedState;
 }
 
-const queryClient = new QueryClient();
-
 export default function NoteDetailsClient({ noteId, dehydratedState }: NoteDetailsClientProps) {
+  const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={dehydratedState}>
@@ -40,6 +40,6 @@ function NoteDetails({ noteId }: { noteId: string }) {
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>{new Date(note.createdAt).toLocaleDateString()}</p>
       </div>
-      </div>
-      );
-      }
+    </div>
+  );
+}
