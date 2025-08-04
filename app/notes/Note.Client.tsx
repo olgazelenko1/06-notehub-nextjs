@@ -12,7 +12,7 @@ import { fetchNotes } from '@/lib/api';
 import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import NoteList from '@/components/NoteList/NoteList';
-import Modal from '@/components/NoteModal/NoteModal';
+import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import type { NoteResponse } from '@/types/note';
 import css from '../page.module.css';
