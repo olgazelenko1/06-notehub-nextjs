@@ -5,5 +5,6 @@ interface ErrorProps {
 }
 
 export default function NoteDetailsError({ error }: ErrorProps) {
-  return <p>Could not fetch note details. {error.message}</p>;
+  return <p>Could not fetch note details. {error.message}</p>
+;
 }
