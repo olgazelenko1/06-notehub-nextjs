@@ -1,6 +1,7 @@
 import { fetchNotes } from '@/lib/api';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import NotesClient from './Notes.Client';
+import NotesClient from './Notes.client';
+
 
 export default async function NotesPage({
   searchParams,
