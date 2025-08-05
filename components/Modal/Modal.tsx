@@ -15,6 +15,10 @@ export default function Modal({ onClose, children }: ModalProps) {
   useEffect(() => {
     setModalRoot(document.getElementById('modal-root'));
 
+  
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
         onClose();
@@ -23,6 +27,7 @@ export default function Modal({ onClose, children }: ModalProps) {
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      document.body.style.overflow = originalOverflow; 
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);

@@ -14,8 +14,3 @@ export interface NewNote {
   content: string;
   tag: NoteTag;
 }
-
-export interface NoteResponse {
-  notes: Note[];
-  totalPages: number;
-}

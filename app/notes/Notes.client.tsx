@@ -5,7 +5,6 @@ import {
   useQuery,
   QueryClientProvider,
   QueryClient,
-  hydrate,
 } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import { fetchNotes } from '@/lib/api';
@@ -14,28 +13,24 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import NoteList from '@/components/NoteList/NoteList';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
-import type { NoteResponse } from '@/types/note';
+import type { NoteResponse } from '@/types/noteResponse';
 import css from '../page.module.css';
 
 interface NotesClientProps {
   page: number;
   perPage: number;
   search: string;
-  dehydratedState: unknown;
+  initialData: NoteResponse;
 }
+
+const queryClient = new QueryClient();
 
 export default function NotesClient({
   page: initialPage,
   perPage,
   search: initialSearch,
-  dehydratedState,
+  initialData,
 }: NotesClientProps) {
-  const [queryClient] = useState(() => {
-    const qc = new QueryClient();
-    hydrate(qc, dehydratedState);
-    return qc;
-  });
-
   const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState(initialSearch);
   const [debouncedSearch] = useDebounce(search, 500);
@@ -44,6 +39,8 @@ export default function NotesClient({
   const { data, isLoading, isError } = useQuery<NoteResponse>({
     queryKey: ['notes', page, debouncedSearch],
     queryFn: () => fetchNotes(page, perPage, debouncedSearch),
+    initialData: page === initialPage && debouncedSearch === initialSearch ? initialData : undefined,
+    placeholderData: (prev) => prev, 
   });
 
   const handlePageChange = ({ selected }: { selected: number }) => {
@@ -81,6 +78,10 @@ export default function NotesClient({
 
         {isLoading && <p className={css.centered}>Loading, please wait...</p>}
         {isError && <p className={css.centered}>Something went wrong.</p>}
+
+        {data && data.notes && data.notes.length === 0 && (
+          <p className={css.centered}>No notes found.</p>
+        )}
 
         {data && data.notes && data.notes.length > 0 && (
           <NoteList notes={data.notes} />
