@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery, QueryClient, QueryClientProvider, HydrationBoundary } from '@tanstack/react-query';
+import { useQuery, HydrationBoundary } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import { DehydratedState } from '@tanstack/react-query';
 import css from './NoteDetails.client.module.css';
@@ -11,14 +11,10 @@ interface NoteDetailsClientProps {
 }
 
 export default function NoteDetailsClient({ noteId, dehydratedState }: NoteDetailsClientProps) {
-  const queryClient = new QueryClient();
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={dehydratedState}>
-        <NoteDetails noteId={noteId} />
-      </HydrationBoundary>
-    </QueryClientProvider>
+    <HydrationBoundary state={dehydratedState}>
+      <NoteDetails noteId={noteId} />
+    </HydrationBoundary>
   );
 }
 
